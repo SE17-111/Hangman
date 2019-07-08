@@ -1,0 +1,15 @@
+package first;
+import javax.swing.*;
+import java.awt.*;
+public class Win extends JFrame 
+{
+	Container c;
+	JLabel l1=new JLabel();
+	Win()
+	{
+		c=this.getContentPane();
+		l1.setText("**************************YOU WIN THE GAME*********************************");
+		l1.setBounds(500, 200, 500, 500);
+		c.add(l1);	
+	}	
+}

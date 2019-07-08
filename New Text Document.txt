@@ -1,0 +1,45 @@
+package first;
+import javax.swing.*;
+import java.io.*;
+import java.awt.*;
+import java.awt.event.*;
+class PlayDemo extends JFrame implements ActionListener
+{
+	Container c;
+	JButton btn=new JButton("PLAY");
+	JLabel lp=new JLabel("");
+	ImageIcon icon=new ImageIcon("C:\\\\Users\\\\M.HARIS KHAN\\\\material\\\\hang.jpg");
+	PlayDemo()
+	{
+		c=this.getContentPane();
+		c.setLayout(null);
+		c.setBackground(Color.WHITE);
+		lp.setIcon(icon);
+		lp.setBounds(0, 0, 1400, 500);
+		btn.setBounds(550, 500, 200, 100);
+		btn.addActionListener(this);
+		c.add(lp);
+		c.add(btn);
+	}
+	public void actionPerformed(ActionEvent event) 
+	{
+		if(event.getSource()==btn)
+		{
+			SecondFrame f2=new SecondFrame();
+			f2.setVisible(true);
+			f2.setBounds(0,0,1400,700);
+		}
+	}
+}
+public class PlayGame
+{
+	public static void main(String[] args) 
+	{
+		PlayDemo play=new PlayDemo();
+		play.setVisible(true);
+		play.setBounds(0, 0, 1400, 700);
+		play.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+	}
+
+}

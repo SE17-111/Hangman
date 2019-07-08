@@ -1,0 +1,717 @@
+package first;
+import java.awt.*;
+import java.io.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Random;
+public class SecondFrame extends JFrame implements ActionListener 
+{
+	JButton btn1=new JButton("PLAYERS");
+	JButton btn2=new JButton("COUNTRY");
+	JButton btn3=new JButton("CITIES");
+	JButton btn4=new JButton("ANIMAL");
+	Container c;
+	String u;
+	SecondFrame()
+	{
+		
+		btn1.setBounds(100, 300, 150, 50);
+		btn2.setBounds(400, 300, 150, 50);
+		btn3.setBounds(700, 300, 150, 50);
+		btn4.setBounds(1000, 300, 150, 50);
+		btn1.addActionListener(this);
+		btn2.addActionListener(this);
+		btn3.addActionListener(this);
+		btn4.addActionListener(this);
+		c=this.getContentPane();
+		c.setLayout(null);
+		c.add(btn1);
+		c.add(btn2);
+		c.add(btn3);
+		c.add(btn4);
+	}
+	
+	public void actionPerformed(ActionEvent event) 
+	{
+		if(event.getSource()==btn1)
+		{
+			Players play=new Players();
+			play.tryPlayers();
+			play.setVisible(true);
+		    play.setBounds(0,0,1400,700);
+		    
+		}
+		
+		if(event.getSource()==btn2)
+		{
+			Country play=new Country();
+			play.tryCountry();
+			play.setVisible(true);
+		    play.setBounds(0,0,1400,700);
+		}
+		
+		if(event.getSource()==btn3)
+		{
+			Cities play=new Cities();
+			play.tryCities();
+			play.setVisible(true);
+		    play.setBounds(0,0,1400,700);	
+		}
+		if(event.getSource()==btn4)
+		{
+			Animal play=new Animal();
+			play.tryAnimal();
+			play.setVisible(true);
+		    play.setBounds(0,0,1400,700);
+		}
+	}
+}
+class Players extends JFrame implements ActionListener 
+{
+	static String u=null;
+	char[] chararray;
+	void set() throws IOException
+	{	
+		 String n;
+		 Random rand = new Random();
+		 int b=rand.nextInt(50)+1; 
+		 FileInputStream fs=new FileInputStream("C:\\Users\\M.HARIS KHAN\\material\\Pakistan Cricket team.txt");
+	     BufferedReader br =new BufferedReader(new InputStreamReader(fs));
+	     for(int i=0;i<b;i++)
+	     {
+				n=br.readLine();
+				u=n;
+	     }
+	     chararray= u.toCharArray();
+	     System.out.println(u);
+	     System.out.println(u.length());
+	}
+    int chance=0;
+	JButton en=new JButton("ENTER");
+	 JTextField tf=new JTextField();
+	 JTextArea jta=new JTextArea();
+	 JLabel la1=new JLabel("");
+	 JLabel la2=new JLabel("");
+	 
+		int h;
+		int r;
+		int add=0;
+		char [] o;
+		int chances=0,win=0;
+		int z=0,d=0,p,n;
+		Container c;
+		void tryPlayers()
+		{
+			try {
+				set();
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+			h=u.length();
+			r=h;
+			o=new char[h];
+		Container c=this.getContentPane();
+		c.setLayout(null);
+		c.setBackground(Color.GRAY);
+		en.setBounds(600, 100, 200, 100);
+		en.addActionListener(this);
+		la1.setBounds(300, 200, 500, 50);
+		la2.setText("ENTERING A SINGLE");
+		la2.setBounds(350, 250, 500, 50);
+		tf.setBounds(100,100,50,50);
+		jta.setBounds(200, 300,500, 300);
+		jta.setEditable(false);
+		for(int i=0;i<h;i++)
+		{
+			o[i]='_';
+		}
+		 for(int t=0;t<h;t++)
+         {
+             if (chararray[t]==' ')
+             {
+                 o[t]=' '; 
+                 d++;
+             }
+             la1.setText("YOUR CHARACTER ELEMENT LENGTH IS:"+(h-d));
+         }
+		 	c.add(la1);
+			c.add(la2);
+			c.add(jta);
+			c.add(en);
+			c.add(tf);
+	 
+	}
+
+	
+	public void actionPerformed(ActionEvent e) 
+	{
+		jta.append("\n\r");
+		if(e.getSource()==en)
+		{
+		z++;
+	        int s=0,f=0,m=0;
+		char x=tf.getText().charAt(0); 
+		p=((int)x);
+		n=p-32;
+		char v;
+		v=((char)n);
+		if(v==chararray[0])
+		{
+			o[0]=v;
+			m++;
+			jta.append("  "+o[0]);
+		}
+		
+	        for(int j=0+m;j<h;j++)
+	        {
+	        if(x==chararray[j])
+	        {    
+	        	o[j]=x; 
+	        jta.append("  "+o[j]);
+	        f++;
+	        }
+	        else  if(x!=chararray[j])
+	        { 
+	        	if (chararray[j]==' ')
+	        	{
+	        		o[j]=' ';
+	        		jta.append("  "+o[j]);
+	        		continue;
+	        	}
+	             s=(s+1)-m;
+	        	
+	        jta.append("  "+o[j]);            
+	        } 
+	        if (s==(h-d))
+	        {    
+
+	            chance++;  
+	            jta.append("    YOU LOSS YOUR CHANCE:  "+chance);  
+	        }
+	        if(z==(r-d))
+	        {
+	        	dispose();
+	        	add++;
+	        }
+	        if (Arrays.equals(o, chararray))
+	        {
+	           win++;
+	           dispose(); 
+	        }
+	        if(chance==3)
+	        	break;
+	        }
+	            
+	        if (f>0||m>0)
+	        {
+	           jta.append("    CORRECT GUESS"); 
+	        }
+		}
+		if (chance==3)
+		dispose();
+		if(win>0)
+		{
+			Win ob=new Win();
+			ob.setVisible(true);
+			ob.setBounds(0,0,1400,700);
+		}
+		if(add>0||chance==3)
+		{
+			Loss ob2=new Loss();
+			ob2.setVisible(true);
+			ob2.setBounds(0,0,1400,700);
+		}
+	}	
+		
+	}
+class Country extends JFrame implements ActionListener 
+{
+	static String u=null;
+	char[] chararray;
+	void set() throws IOException
+	{	
+		 String n;
+		 Random rand = new Random();
+		 int b=rand.nextInt(50)+1; 
+		 FileInputStream fs=new FileInputStream("C:\\Users\\M.HARIS KHAN\\material\\Country.txt");
+	     BufferedReader br =new BufferedReader(new InputStreamReader(fs));
+	     for(int i=0;i<b;i++)
+	     {
+				n=br.readLine();
+				u=n;
+	     }
+	     chararray= u.toCharArray();
+	     System.out.println(u);
+	     System.out.println(u.length());
+	}
+    int chance=0;
+	 JButton en=new JButton("ENTER");
+	 JTextField tf=new JTextField();
+	 JTextArea jta=new JTextArea();
+	 JLabel la1=new JLabel("");
+	 JLabel la2=new JLabel("");
+		int h;
+		int r;
+		int add=0;
+		char[] o;
+		int chances=0,win=0;
+		int z=0,d=0,p,n;
+		Container c;
+		void tryCountry()
+		{
+			try {
+				set();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			h=u.length();
+			r=h;
+			o=new char[h];
+		Container c=this.getContentPane();
+		c.setBackground(Color.GRAY);
+		c.setLayout(null);
+		en.setBounds(600, 100, 200, 100);
+		en.addActionListener(this);
+		la1.setBounds(300, 200, 500, 50);
+		la2.setText("ENTERING A SINGLE");
+		la2.setBounds(350, 250, 500, 50);
+		tf.setBounds(100,100,50,50);
+		jta.setBounds(200, 300,500, 300);
+		jta.setEditable(false);
+		for(int i=0;i<h;i++)
+		{
+			o[i]='_';
+		}
+		 for(int t=0;t<h;t++)
+         {
+             if (chararray[t]==' ')
+             {
+                 o[t]=' '; 
+                 d++;
+             }
+             la1.setText("YOUR CHARACTER ELEMENT LENGTH IS:"+(h-d));
+         }
+		c.add(jta);
+	    c.add(en);
+	    c.add(tf);
+	    c.add(la1);
+		c.add(la2);
+	 	}
+
+	
+	public void actionPerformed(ActionEvent e) 
+	{
+		jta.append("\n\r");
+		if(e.getSource()==en)
+		{
+		z++;
+	        int s=0,f=0,m=0;
+		char x=tf.getText().charAt(0); 
+		p=((int)x);
+		n=p-32;
+		char v;
+		v=((char)n);
+		if(v==chararray[0])
+		{
+			o[0]=v;
+			m++;
+			jta.append("  "+o[0]);
+		}
+		
+	        for(int j=0+m;j<h;j++)
+	        {
+	        if(x==chararray[j])
+	        {    
+	        	o[j]=x; 
+	        jta.append("  "+o[j]);
+	        f++;
+	        }
+	        else  if(x!=chararray[j])
+	        { 
+	        	if (chararray[j]==' ')
+	        	{
+	        		o[j]=' ';
+	        		jta.append("  "+o[j]);
+	        		continue;
+	        	}
+	             s=(s+1)-m;
+	        	
+	        jta.append("  "+o[j]);            
+	        } 
+	        if (s==(h-d))
+	        {    
+
+	            chance++;  
+	            jta.append("    YOU LOSS YOUR CHANCE:  "+chance);  
+	        }
+	        if(z==(r-d))
+	        {
+	        	dispose();
+	        	add++;
+	        }
+	        if (Arrays.equals(o, chararray))
+	        {
+	           win++;
+	           dispose(); 
+	        }
+	        if(chance==3)
+	        	break;
+	        }
+	            
+	        if (f>0||m>0)
+	        {
+	           jta.append("    CORRECT GUESS"); 
+	        }
+		}
+		if (chance==3)
+		dispose();
+		if(win>0)
+		{
+			Win ob=new Win();
+			ob.setVisible(true);
+			ob.setBounds(0,0,1400,700);
+		}
+		if(add>0||chance==3)
+		{
+			Loss ob2=new Loss();
+			ob2.setVisible(true);
+			ob2.setBounds(0,0,1400,700);
+		}
+	}	
+		
+	}
+class Cities extends JFrame implements ActionListener
+{
+
+	static String u=null;
+	char[] chararray;
+	void set() throws IOException
+	{	
+		 String n;
+		 Random rand = new Random();
+		 int b=rand.nextInt(50)+1; 
+		 FileInputStream fs=new FileInputStream("C:\\Users\\M.HARIS KHAN\\material\\Cities.txt");
+	     BufferedReader br =new BufferedReader(new InputStreamReader(fs));
+	     for(int i=0;i<b;i++)
+	     {
+				n=br.readLine();
+				u=n;
+	     }
+	     chararray= u.toCharArray();
+	     System.out.println(u);
+	     System.out.println(u.length());
+	}
+	 JButton en=new JButton("ENTER");
+	 JTextField tf=new JTextField();
+	 JTextArea jta=new JTextArea();
+	 JLabel la1=new JLabel("");
+	 JLabel la2=new JLabel("");
+	
+		int h;
+		int r;
+		int add=0;
+		char [] o;
+		int chance=0;
+		int chances=0,win=0;
+		int z=0,d=0,p,n;
+		Container c;
+	void tryCities()
+	{
+		try {
+			set();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		h=u.length();
+		r=h;
+		o=new char[h];
+		c=this.getContentPane();
+		c.setBackground(Color.GRAY);
+		c.setLayout(null);
+		en.setBounds(600, 100, 200, 100);
+		en.addActionListener(this);
+		la1.setBounds(300, 200, 500, 50);
+		la2.setText("ENTERING A SINGLE");
+		la2.setBounds(350, 250, 500, 50);
+		tf.setBounds(100,100,50,50);
+		jta.setBounds(200, 300,500, 300);
+		jta.setEditable(false);
+		for(int i=0;i<h;i++)
+		{
+			o[i]='_';
+		}
+		 for(int t=0;t<h;t++)
+         {
+             if (chararray[t]==' ')
+             {
+                 o[t]=' '; 
+                 d++;
+             }
+             la1.setText("YOUR CHARACTER ELEMENT LENGTH IS:"+(h-d));
+         }
+		c.add(jta);
+	    c.add(en);
+	    c.add(tf);
+	    c.add(la1);
+		c.add(la2);
+	}
+
+	
+	public void actionPerformed(ActionEvent e) 
+	{
+		jta.append("\n\r");
+		if(e.getSource()==en)
+		{
+		z++;
+	        int s=0,f=0,m=0;
+		char x=tf.getText().charAt(0); 
+		p=((int)x);
+		n=p-32;
+		char v;
+		v=((char)n);
+		if(v==chararray[0])
+		{
+			o[0]=v;
+			m++;
+			jta.append("  "+o[0]);
+		}
+		
+	        for(int j=0+m;j<h;j++)
+	        {
+	        if(x==chararray[j])
+	        {    
+	        	o[j]=x; 
+	        jta.append("  "+o[j]);
+	        f++;
+	        }
+	        else  if(x!=chararray[j])
+	        { 
+	        	if (chararray[j]==' ')
+	        	{
+	        		o[j]=' ';
+	        		jta.append("  "+o[j]);
+	        		continue;
+	        	}
+	             s=(s+1)-m;
+	        	
+	        jta.append("  "+o[j]);            
+	        } 
+	        if (s==(h-d))
+	        {    
+
+	            chance++;  
+	            jta.append("    YOU LOSS YOUR CHANCE:  "+chance);  
+	        }
+	        if(z==(r-d))
+	        {
+	        	dispose();
+	        	add++;
+	        }
+	        if (Arrays.equals(o, chararray))
+	        {
+	           win++;
+	           dispose(); 
+	        }
+	        if(chance==3)
+	        	break;
+	        }
+	            
+	        if (f>0||m>0)
+	        {
+	           jta.append("    CORRECT GUESS"); 
+	        }
+		}
+		if (chance==3)
+		dispose();
+		if(win>0)
+		{
+			Win ob=new Win();
+			ob.setVisible(true);
+			ob.setBounds(0,0,1400,700);
+		}
+		if(add>0||chance==3)
+		{
+			Loss ob2=new Loss();
+			ob2.setVisible(true);
+			ob2.setBounds(0,0,1400,700);
+		}
+	}
+		
+	}
+
+class Animal extends JFrame implements ActionListener
+{
+	static String u=null;
+	char[] chararray;
+	void set() throws IOException
+	{	
+		 String n;
+		 Random rand = new Random();
+		 int b=rand.nextInt(50)+1; 
+		 FileInputStream fs=new FileInputStream("C:\\Users\\M.HARIS KHAN\\material\\Animal.txt");
+	     BufferedReader br =new BufferedReader(new InputStreamReader(fs));
+	     for(int i=0;i<b;i++)
+	     {
+				n=br.readLine();
+				u=n;
+	     }
+	     chararray= u.toCharArray();
+	     System.out.println(u);
+	     System.out.println(u.length());
+	}
+        int chance=0;
+	 JButton en=new JButton("ENTER");
+	 JTextField tf=new JTextField();
+	 JTextArea jta=new JTextArea();
+	 JLabel la1=new JLabel("");
+	 JLabel la2=new JLabel("");                               
+		int h;
+		int r;
+		int add=0;
+		char [] o;
+		int chances=0,win=0;
+		int z=0,d=0,p,n;
+		Container c;
+	void tryAnimal()
+	{
+		try {
+			set();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		h=u.length();
+		r=h;
+		o=new char[h];
+		Container c=this.getContentPane();
+		c.setLayout(null);
+		c.setBackground(Color.GRAY);
+		en.setBounds(600, 100, 200, 100);
+		en.addActionListener(this);
+		tf.setBounds(100, 100, 50, 50);
+		la1.setBounds(300, 200, 500, 50);
+		la2.setText("ENTERING A SINGLE");
+		la2.setBounds(350, 250, 500, 50);
+		jta.setBounds(200, 300,500, 300);
+		jta.setEditable(false);
+		for(int i=0;i<h;i++)
+		{
+			o[i]='_';
+		}
+		 for(int t=0;t<h;t++)
+         {
+             if (chararray[t]==' ')
+             {
+                 o[t]=' '; 
+                 d++;
+             }
+             la1.setText("YOUR CHARACTER ELEMENT LENGTH IS:"+(h-d));
+         }
+		c.add(jta);
+		c.add(la1);
+		c.add(la2);
+		c.add(tf);
+		c.add(en);
+	 
+	}
+
+	public void actionPerformed(ActionEvent e) 
+	{
+		jta.append("\n\r");
+		if(e.getSource()==en)
+		{
+		z++;
+	        int s=0,f=0,m=0;
+		char x=tf.getText().charAt(0); 
+		p=((int)x);
+		n=p-32;
+		char v;
+		v=((char)n);
+		if(v==chararray[0])
+		{
+			o[0]=v;
+			m++;
+			jta.append("  "+o[0]);
+		}
+		
+	        for(int j=0+m;j<h;j++)
+	        {
+	        if(x==chararray[j])
+	        {    
+	        	o[j]=x; 
+	        jta.append("  "+o[j]);
+	        f++;
+	        }
+	        else  if(x!=chararray[j])
+	        { 
+	        	if (chararray[j]==' ')
+	        	{
+	        		o[j]=' ';
+	        		jta.append(" "+o[j]);
+	        		continue;
+	        	}
+	             s=(s+1)-m;
+	        	
+	        jta.append("  "+o[j]);            
+	        } 
+	        if (s==(h-d))
+	        {    
+
+	            chance++;  
+	            jta.append("    YOU LOSS YOUR CHANCE:  "+chance);  
+	        }
+	        if(z==(r-d))
+	        {
+	        	dispose();
+	        	add++;
+	        }
+	        if (Arrays.equals(o, chararray))
+	        {
+	           win++;
+	           dispose(); 
+	        }
+	        if(chance==3)
+	        	break;
+	        }
+	            
+	        if (f>0||m>0)
+	        {
+	           jta.append("    CORRECT GUESS"); 
+	        }
+		}
+		if (chance==3)
+		dispose();
+		if(win>0)
+		{
+			Win ob=new Win();
+			ob.setVisible(true);
+			ob.setBounds(0,0,1400,700);
+		}
+		if(add>0||chance==3)
+		{
+			Loss ob2=new Loss();
+			ob2.setVisible(true);
+			ob2.setBounds(0,0,1400,700);
+		}
+	}	
+		
+	}
+		
+	
+
+
+
+
+
